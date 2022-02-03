@@ -34,11 +34,7 @@ public class App {
         return false;
       }
       
-      public static void main(String[] argos) {
-        Logger logger = LogManager.getLogger(App.class);
-        int port = Integer.parseInt(System.getenv("PORT"));
-        port(port);
-         logger.error("Current port number:" + port);
+      public static void main(String[] args) {
 
         port(getHerokuAssignedPort());
 
