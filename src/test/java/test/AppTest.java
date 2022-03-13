@@ -16,26 +16,36 @@ class AppTest {
         assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
     @Test
-   public void testFound() {
+   public void EndBiggerThanStart() {
       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-      assertTrue(App.search(array, 4));
+      System.out.println(App.SubArrSummation(array, 3,2));
+      assertTrue(App.SubArrSummation(array, 3,2)==-1);
     }
 
     @Test
-    public void testNotFound() {
-      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-      assertFalse(App.search(array, 5));
+    public void SampleExpectedCase() {
+      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4,5,6,7));
+      assertTrue(App.SubArrSummation(array,3,6)==15);
+    }
+    @Test
+    public void SampleExpectedCase2() {
+      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(89, 77, 46, 31,90,65,444));
+      assertTrue(App.SubArrSummation(array,0,2)==166);
+    }
+    @Test
+    public void StartAndEndEqual() {
+      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4,5,6,7));
+      assertTrue(App.SubArrSummation(array, 1,1)==-1);
+    }
+    @Test
+    public void EndBiggerThanSize() {
+      ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4,5,6,7));
+      assertTrue(App.SubArrSummation(array, 1,10)==-1);
     }
 
     @Test
-    public void testEmptyArray() {
-      ArrayList<Integer> array = new ArrayList<>();
-      assertFalse(App.search(array, 1));
-    }
-
-    @Test
-    public void testNull() {
-      assertFalse(App.search(null, 1));
+    public void NullArray() {
+      assertTrue(App.SubArrSummation(null, 1,5)==-1);
     }
 
 }

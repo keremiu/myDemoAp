@@ -24,26 +24,29 @@ public class App {
     public String getGreeting() {
         return "Hello world.";
     }
-    public static boolean search(ArrayList<Integer> array, int e) {
-        System.out.println("inside search");
-        if (array == null) return false;
+    public static int SubArrSummation(ArrayList<Integer> array, int start,int end) {
+       // System.out.println("inside search");
+       int sum = 0;
+        if ((array == null) || (start>end) || (array.size()<end) || (start==end)) return -1;
   
-        for (int elt : array) {
-          if (elt == e) return true;
+        for (int i=start;i<end;i++) {
+          sum+=array.get(i);
         }
-        return false;
+        return sum;
       }
       
       public static void main(String[] args) {
+        Logger logger = LogManager.getLogger(App.class);
+        int port = 4567;//Integer.parseInt(System.getenv("PORT")); hata verdiği için direk port değerini döndürdüm.
+        port(port);
+        logger.error("Current port number:" + port);
+
 
         port(getHerokuAssignedPort());
 
         get("/", (req, res) -> "Hello, World");
 
         post("/compute", (req, res) -> {
-          //System.out.println(req.queryParams("input1"));
-          //System.out.println(req.queryParams("input2"));
-
           String input1 = req.queryParams("input1");
           java.util.Scanner sc1 = new java.util.Scanner(input1);
           sc1.useDelimiter("[;\r\n]+");
@@ -56,13 +59,16 @@ public class App {
           sc1.close();
           System.out.println(inputList);
 
+          
+          String input2 = req.queryParams("input2");
+          java.util.Scanner sc2 = new java.util.Scanner(input2);
+          sc2.useDelimiter("[;\r\n]+");
+          int input2AsInt = sc2.nextInt();
+          int input3AsInt = sc2.nextInt();
 
-          String input2 = req.queryParams("input2").replaceAll("\\s","");
-          int input2AsInt = Integer.parseInt(input2);
+          int result = SubArrSummation(inputList, input2AsInt,input3AsInt);
 
-          boolean result = App.search(inputList, input2AsInt);
-
-          Map<String, Boolean> map = new HashMap<String, Boolean>();
+          Map<String, Integer> map = new HashMap<String, Integer>();
           map.put("result", result);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
